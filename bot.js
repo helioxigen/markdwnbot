@@ -66,12 +66,10 @@ bot.on('inline_query', function (msg) {
   const queryId = msg.id;
   const text = msg.query;
   
-  let striked = addSpecialChar(text, '̶');
-  let underlined = addSpecialChar(text, '̲');
   let mashedup = zalgo(text);
   let inline = generateInline(text);
   
-  let answer = generateArticles({striked, underlined, mashedup, inline});
+  let answer = generateArticles({inline, mashedup});
   
   bot.answerInlineQuery(queryId, answer);
 });
