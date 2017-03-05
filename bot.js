@@ -2,7 +2,7 @@ const token = process.env.TOKEN;
 
 const Bot = require('node-telegram-bot-api');
 const zalgo = require('to-zalgo');
-const bot = '';
+let bot = '';
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
