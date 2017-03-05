@@ -1,7 +1,7 @@
 {
-  "name": "heroku-node-telegram-bot",
-  "version": "1.0.0",
-  "description": "Starter pack for running telegram bot on the Heroku using Node.js",
+  "name": "markdwnbot",
+  "version": "0.0.1",
+  "description": "The most useless bot in universe, made to strikethrough text.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,8 +9,8 @@
     "set_env": "export $(cat .env | xargs)",
     "switch_to_dev": "export $(cat .env | xargs) && wget --spider https://api.telegram.org/bot$TOKEN/setWebhook?url= --delete-after && node index.js"
   },
-  "author": "Volodymyr Lut",
-  "license": "ISC",
+  "author": "galixigen",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
