@@ -1,8 +1,8 @@
-let token = process.env.TOKEN;
+const token = process.env.TOKEN;
 
-let Bot = require('node-telegram-bot-api');
-let zalgo = require('to-zalgo');
-let bot;
+const Bot = require('node-telegram-bot-api');
+const zalgo = require('to-zalgo');
+const bot;
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
@@ -63,8 +63,8 @@ function generateInline(text){
 }
 
 bot.on('inline_query', function (msg) {
-  let queryId = msg.id;
-  let text = msg.query;
+  const queryId = msg.id;
+  const text = msg.query;
   
   let striked = addSpecialChar(text, '̶');
   let underlined = addSpecialChar(text, '̲');
