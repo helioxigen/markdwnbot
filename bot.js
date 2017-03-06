@@ -45,18 +45,27 @@ function generateArticles(names){
 }
 
 function generateInline(text){
-  let chars = '-';
+  let chars = ['-', '/'];
   
-  let substr = text.match(`${chars}(.*?)${chars}`);
-  let res = text;
+  for (let i = 0; i < chars.length; i++) {
+    let substr = text.match(`${chars[i]}(.*?)${chars[i]}`);
+    let res = text;
   
-  while (substr != null) {
-    let wordUnmod = substr[0];
-    let wordMod = substr[1];
-    let wordFormat = addSpecialChar(wordMod, '̶');
-        
-    res = res.replace(wordUnmod, wordFormat);
-    substr = res.match(`${chars}(.*?)${chars}`);
+    while (substr != null) {
+      let wordUnmod = substr[0];
+      let wordMod = substr[1];
+      switch (chars[i]) {
+        case '-':
+          let wordFormat = addSpecialChar(wordMod, '̶');
+          break;
+        case '/':
+          let wordFormat = zalgo(wordMod);
+          break;
+      }      
+          
+      res = res.replace(wordUnmod, wordFormat);
+      substr = res.match(`${chars}(.*?)${chars}`);
+    }
   }
   
   return res;
