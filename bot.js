@@ -54,12 +54,13 @@ function generateInline(text){
     while (substr != null) {
       let wordUnmod = substr[0];
       let wordMod = substr[1];
+      let wordFormat = '';
       switch (chars[i]) {
         case '-':
-          let wordFormat = addSpecialChar(wordMod, '̶');
+          wordFormat = addSpecialChar(wordMod, '̶');
           break;
         case '/':
-          let wordFormat = zalgo(wordMod);
+          wordFormat = zalgo(wordMod);
           break;
       }      
           
