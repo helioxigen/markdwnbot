@@ -83,7 +83,11 @@ bot.on('inline_query', function (msg) {
   const instruction = {
     type: 'article',
     id: '228',
-    title: 'INSTRUCTION',
+    title: 'INSTRUCTION(Don\'t click)',
+    input_message_content: {
+      message_text: '/*I WARNED YOU*/',
+      parse_mode: 'Markdown'
+    },
     description: '*b* /z/ -s- _i_'
   };
   
