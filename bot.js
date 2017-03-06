@@ -76,10 +76,18 @@ bot.on('inline_query', function (msg) {
   const queryId = msg.id;
   const text = msg.query;
   
-  let mashedup = zalgo(text);
-  let inline = generateInline(text);
+  const mashedup = zalgo(text);
+  const inline = generateInline(text);
   
-  let answer = generateArticles({inline, mashedup});
+  const articles = generateArticles({inline});
+  const instruction = {
+    type: 'article',
+    id: '228',
+    title: 'INSTRUCTION',
+    description: '*b* /z/ -s- _i_'
+  };
+  
+  const answer = articles+instruction;
   
   bot.answerInlineQuery(queryId, answer);
 });
