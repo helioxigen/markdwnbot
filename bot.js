@@ -87,7 +87,7 @@ bot.on('inline_query', function (msg) {
     description: '*b* /z/ -s- _i_'
   };
   
-  const answer = articles+instruction;
+  const answer = [articles, instruction];
   
   bot.answerInlineQuery(queryId, answer);
 });
