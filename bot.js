@@ -4,6 +4,10 @@ const Bot = require('node-telegram-bot-api');
 const zalgo = require('to-zalgo');
 let bot = '';
 
+//vocabs
+const genericVocab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const vaporVocab = 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ';
+
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
   bot.setWebHook(process.env.HEROKU_URL + bot.token);
@@ -44,6 +48,26 @@ function generateArticles(names){
   return res;
 }
 
+function generateSubstitutedText(string, vocab){
+  let res = '';
+  let exceptions = ['*','_','`'];
+  
+  for (var i = 0; i < string.length; i++) {
+    if (exceptions.some(e => e !== string[i])){
+      let letter = string[i];
+      let letterIndex = genericVocab.indexOf(letter);
+            
+      if (letterIndex >= 0){
+        res += vocab[letterIndex];
+      } else {
+        res += letter;
+      }
+    }
+  }
+  
+  return res;
+}
+
 function generateInline(text){
   let chars = ['-', '/'];
   let res = text;
@@ -61,6 +85,9 @@ function generateInline(text){
           break;
         case '/':
           wordFormat = zalgo(wordMod);
+          break;
+        case '=':
+          wordFormat = generateSubstitutedText(wordMod, vaporVocab);
           break;
       }      
           
@@ -88,7 +115,7 @@ bot.on('inline_query', function (msg) {
       message_text: '/*I WARNED YOU*/',
       parse_mode: 'Markdown'
     },
-    description: '*b* /z/ -s- _i_'
+    description: '*b* /z/ -s- _i_ =Ｖ='
   };
   
   articles.push(instruction);
