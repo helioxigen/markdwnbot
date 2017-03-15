@@ -57,12 +57,8 @@ function generateSubstitutedText(string, vocab){
     if (exceptions.some(e => e !== string[i])){
       let letter = string[i];
       let letterIndex = genericVocab.indexOf(letter);
-      
-      if (letter == 's' || letter == 'S'){
-        res += 'ᛋ';
-      } else {
-        letterIndex >= 0 ? res += vocab[letterIndex] : res+= letter;
-      }
+            
+      letterIndex >= 0 ? res += vocab[letterIndex] : res+= letter;
     }
   }
   
