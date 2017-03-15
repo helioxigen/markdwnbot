@@ -5,8 +5,11 @@ const zalgo = require('to-zalgo');
 let bot = '';
 
 //vocabs
-const genericVocab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-const vaporVocab = 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ';
+const genericVocab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+const vaporVocab = 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ１２３４５６７８９０';
+
+//exceptions for Markdown
+const exceptions = ['*','_','`'];
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
@@ -20,7 +23,6 @@ console.log('Bot server started in the ' + process.env.NODE_ENV + ' mode');
 
 function addSpecialChar(text, toadd){
   let res = '';
-  let exceptions = ['*','_','`'];
   
   for (let i = 0; i < text.length; i++) {
     if (exceptions.some(e => e !== text[i])){
@@ -50,18 +52,13 @@ function generateArticles(names){
 
 function generateSubstitutedText(string, vocab){
   let res = '';
-  let exceptions = ['*','_','`'];
   
   for (var i = 0; i < string.length; i++) {
     if (exceptions.some(e => e !== string[i])){
       let letter = string[i];
       let letterIndex = genericVocab.indexOf(letter);
-            
-      if (letterIndex >= 0){
-        res += vocab[letterIndex];
-      } else {
-        res += letter;
-      }
+      
+      letterIndex >= 0 ? res += vocab[letterIndex] : res+= letter;
     }
   }
   
@@ -69,7 +66,7 @@ function generateSubstitutedText(string, vocab){
 }
 
 function generateInline(text){
-  let chars = ['-', '/'];
+  const chars = ['-', '/', '='];
   let res = text;
   
   for (let i = 0; i < chars.length; i++) {
@@ -79,6 +76,7 @@ function generateInline(text){
       let wordUnmod = substr[0];
       let wordMod = substr[1];
       let wordFormat = '';
+      
       switch (chars[i]) {
         case '-':
           wordFormat = addSpecialChar(wordMod, '̶');
